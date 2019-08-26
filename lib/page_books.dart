@@ -64,6 +64,7 @@ class _BooksPageState extends State<BooksPage> {
         ),
       ),
       onTap: () {
+        Books.book = book;
         Navigator.of(context).pushNamed('/book');
       },
     );

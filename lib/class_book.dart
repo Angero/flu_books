@@ -2,6 +2,7 @@ part of library_book;
 
 class Books {
   List<Book> items;
+  static Book book;
 
   Books() {
     items = List();
