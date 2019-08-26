@@ -1,16 +1,12 @@
-# books
+# Тестовое задание "Книги"
 
-Test project
+## Задание
 
-## Getting Started
+Необходимо сделать небольшое приложение - библиотеку книг, в котором можно просматривать список книг, добавить новую книгу (буквально пару полей), удалить и отредактировать. 
+Нужно сделать без клиент серверного взаимодействия, в качестве хранилища можно использовать оперативную память либо SQLite, при этом надо иметь ввиду, что в будущем все эти действия (добавление книг, редактировани итд) будут работать через сервер, т.е. нужно сделать возможным легко менять источник данных. Кроме этого, необходимо,  чтобы сохранялся стейт экранов и при повороте данные с экрана не терялись.
 
-This project is a starting point for a Flutter application.
+![books](https://user-images.githubusercontent.com/9856286/63691495-cb813380-c828-11e9-9977-85c7c5fa02d4.gif)
 
-A few resources to get you started if this is your first Flutter project:
+## Решение
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Данные сохраняются в оперативной памяти в виде строкового значения в статической переменной data класса Storage. Данные сохраняются в формате JSON для удобства перехода на использование клиент-серверной технологии с использованием API. CRUD в данном случае не применяется, так как объем сохраняемых данных незначителен. В хранилище передается весь объем данных. Изображения берутся из интернета и не кэшируются. Дополнительные плагины не используются.
