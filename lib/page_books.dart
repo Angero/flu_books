@@ -31,6 +31,15 @@ class _BooksPageState extends State<BooksPage> {
           return _itemBuilder(books.items[index]);
         },
       ),
+      floatingActionButton: FloatingActionButton(
+          child: new Icon(Icons.add),
+          onPressed: () {
+            Books.book = Book();
+            Books.book.name = '';
+            Books.book.author = '';
+            Books.book.parent = books;
+            Navigator.of(context).pushNamed('/book');
+          }),
     );
   }
 
@@ -44,7 +53,9 @@ class _BooksPageState extends State<BooksPage> {
               width: 126.0,
               height: 203.0,
               color: Colors.black12,
-              child: Image.network(book.image),
+              child: book.image == null || book.image == ''
+                  ? Container()
+                  : Image.network(book.image),
             ),
             SizedBox(
               height: 10.0,

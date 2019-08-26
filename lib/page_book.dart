@@ -26,20 +26,9 @@ class _BookPageState extends State<BookPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Книга'),
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {
-          Books.book.name = _controllerName.text;
-          Books.book.author = _controllerAuthor.text;
-          Map map = Books.book.parent.toMap();
-          Storage.data = json.encode(map);
-          Navigator.of(context).pop();
-        }),
+        leading: _backWidget(),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.delete_outline), onPressed: () {
-            Books.book.parent.items.remove(Books.book);
-            Map map = Books.book.parent.toMap();
-            Storage.data = json.encode(map);
-            Navigator.of(context).pop();
-          }),
+          _trashWidget(),
         ],
       ),
       body: Padding(
@@ -65,18 +54,55 @@ class _BookPageState extends State<BookPage> {
                 hintText: 'Введите имя автора',
               ),
             ),
-            SizedBox(height: 40.0,),
-            Container(
-//              width: 126.0,
-              height: 203.0,
-//              color: Colors.black12,
-              child: Books.book.image == null
-                  ? Text('Нет картинки')
-                  : Image.network(Books.book.image),
+            SizedBox(
+              height: 40.0,
             ),
+            _imageWidget(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _backWidget() {
+    return IconButton(
+        icon: Icon(Icons.arrow_back_ios),
+        onPressed: () {
+          if (Books.book.image == null &&
+              _controllerName.text == '' &&
+              _controllerAuthor.text == '') Navigator.of(context).pop();
+          if (_controllerName.text == '') return;
+          if (_controllerAuthor.text == '') return;
+          Books.book.name = _controllerName.text;
+          Books.book.author = _controllerAuthor.text;
+          if (Books.book.image == null) {
+            Books.book.image = '';
+            Books.book.parent.items.add(Books.book);
+          }
+          Map map = Books.book.parent.toMap();
+          Storage.data = json.encode(map);
+          Navigator.of(context).pop();
+        });
+  }
+
+  Widget _trashWidget() {
+    if (Books.book.image == null) return Container();
+    return IconButton(
+        icon: Icon(Icons.delete_outline),
+        onPressed: () {
+          Books.book.parent.items.remove(Books.book);
+          Map map = Books.book.parent.toMap();
+          Storage.data = json.encode(map);
+          Navigator.of(context).pop();
+        });
+  }
+
+  Widget _imageWidget() {
+    return Container(
+      height: 203.0,
+      child: (Books.book.image == null || Books.book.image == '')
+          ? Text('Нет картинки')
+          : Image.network(Books.book.image),
     );
   }
 }
