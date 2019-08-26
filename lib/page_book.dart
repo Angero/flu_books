@@ -17,10 +17,22 @@ class _BookPageState extends State<BookPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Книга'),
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: () {
+          Books.book.name = _controllerName.text;
+          Books.book.author = _controllerAuthor.text;
+          Map map = Books.book.parent.toMap();
+          Storage.data = json.encode(map);
+          Navigator.of(context).pop();
+        }),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.delete_outline), onPressed: () {
             Books.book.parent.items.remove(Books.book);
