@@ -21,9 +21,14 @@ class _BookPageState extends State<BookPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Книга'),
-//        actions: <Widget>[
-//          IconButton(icon: Icon(Icons.info_outline), onPressed: null),
-//        ],
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.delete_outline), onPressed: () {
+            Books.book.parent.items.remove(Books.book);
+            Map map = Books.book.parent.toMap();
+            Storage.data = json.encode(map);
+            Navigator.of(context).pop();
+          }),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
@@ -54,7 +59,7 @@ class _BookPageState extends State<BookPage> {
               height: 203.0,
 //              color: Colors.black12,
               child: Books.book.image == null
-                  ? Text('zzz')
+                  ? Text('Нет картинки')
                   : Image.network(Books.book.image),
             ),
           ],
